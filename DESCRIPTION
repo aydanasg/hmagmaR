@@ -1,0 +1,10 @@
+Package: hmagmaR
+Type: Package
+Title: Incorporation of chromatin interaction and epigenetic profiles to predict risk genes
+Version: 0.0.1.0
+Encoding: UTF-8
+RoxygenNote: 7.3.1
+Imports:  data.table (>= 1.14.8),
+          GenomicRanges (>= 1.54.1),
+          ChIPseeker (>= 1.38.0),
+          dplyr (>= 1.1.3)
