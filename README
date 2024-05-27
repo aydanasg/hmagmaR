@@ -1,5 +1,4 @@
-**hmagmaR - Incorporation of chromatin interaction and epigenetic profiles to predict risk genes: Gene Level Analysis using MAGMA (HMAGMA)
-**
+**hmagmaR - Incorporation of chromatin interaction and epigenetic profiles to predict risk genes: Gene Level Analysis using MAGMA (HMAGMA)**
 How to Install: 
 
 1. `remotes::install_github("aydanasg/hmagmaR")`
