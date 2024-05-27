@@ -128,5 +128,5 @@ AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotat
   # Convert dataframe to list
   aggregated_list <- apply(aggregated_df_conv, 1, function(row) paste(row, collapse = "\t"))
   
-  writeLines(aggregated_list, paste0(AnnotationFile.path, "SNP_aggregate_transcript", fileName, ".transcript.annot"))
+  writeLines(aggregated_list, paste0(AnnotationFile, "SNP_aggregate_transcript.", fileName, ".transcript.annot"))
 }
