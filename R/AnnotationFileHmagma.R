@@ -30,7 +30,7 @@ AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotat
   
   #reading snps file -  g1000 reference genome from European ancestry (.bim) and selecting only relevant columns (chr, rsid, position)
   snps<-snps
-  GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
+  snps<-GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
   
   #Reading the plac-seq files for each cell type
   hic <- hic

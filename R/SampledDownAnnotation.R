@@ -32,7 +32,7 @@ SampledDownAnnotation <- function(fileName, hic, regulatoryRegions, snps, annota
   
   #reading snps file -  g1000 reference genome from European ancestry (.bim) and selecting only relevant columns (chr, rsid, position)
   snps<-snps
-  GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
+  snps<-GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
   
 for(s in 1:sampleDownNumber) {
    hic <- hic
