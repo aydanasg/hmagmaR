@@ -4,7 +4,9 @@
 #' @param fileName Name in the ouput file 
 #' @param hic Chromatin interaction data file with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
 #' @param regulatoryRegions File of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
-#' @param snps File of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
+#' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
+#' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
+#' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg" 
 #' @param AnnotationFile.path Path where to save the sampled down annotation files 
 #' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
 #' @export
@@ -18,16 +20,16 @@
 #library(dplyr)
 
 ## PLAC-seq filtered to regulatoryRegions promoter interactions 
-AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, AnnotationFile.path) {
+AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotated_genes,  snpgeneexon, AnnotationFile.path) {
   
   #Loading TxDb.Hsapiens.UCSC.hg19.knownGene.org.Hs.eg.db for gene coordinates 
-  annotated_genes<-fread(input = "data/annotated_genes_TxDb.Hsapiens.UCSC.hg19.knownGene.org.Hs.eg.db.txt")
+  annotated_genes<-annotated_genes
   
   #Loading exonic/promoter SNPs and their genes and combining into one dataframe
-  snpgeneexon<-fread("data/exonic_promoter_snps_chipSeeker.txt")
+  snpgeneexon<-snpgeneexon
   
   #reading snps file -  g1000 reference genome from European ancestry (.bim) and selecting only relevant columns (chr, rsid, position)
-  snps<-fread(paste0(snps))
+  snps<-snps
   GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
   
   #Reading the plac-seq files for each cell type

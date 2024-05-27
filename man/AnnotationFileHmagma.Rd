@@ -9,6 +9,8 @@ AnnotationFileHmagma(
   hic,
   regulatoryRegions,
   snps,
+  annotated_genes,
+  snpgeneexon,
   AnnotationFile.path
 )
 }
@@ -19,7 +21,11 @@ AnnotationFileHmagma(
 
 \item{regulatoryRegions}{File of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
-\item{snps}{File of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"}
+\item{snps}{Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"}
+
+\item{annotated_genes}{Dataframe of reference genes. This should contain columns with names "chr", "start", "end",    "ensg". Chromosome columns should have "chr" before the number}
+
+\item{snpgeneexon}{Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"}
 
 \item{AnnotationFile.path}{Path where to save the sampled down annotation files}
 }
