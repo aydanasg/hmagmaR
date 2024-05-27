@@ -20,7 +20,7 @@
 #library(dplyr)
 
 ## PLAC-seq filtered to regulatoryRegions promoter interactions 
-AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotated_genes,  snpgeneexon, AnnotationFile.path) {
+AnnotationFileHmagma <- function(hic, regulatoryRegions, snps, annotated_genes,  snpgeneexon, AnnotationFile) {
   
   #Loading TxDb.Hsapiens.UCSC.hg19.knownGene.org.Hs.eg.db for gene coordinates 
   annotated_genes<-annotated_genes
@@ -128,5 +128,5 @@ AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotat
   # Convert dataframe to list
   aggregated_list <- apply(aggregated_df_conv, 1, function(row) paste(row, collapse = "\t"))
   
-  writeLines(aggregated_list, paste0(AnnotationFile, "SNP_aggregate_transcript.", fileName, ".transcript.annot"))
+  writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot"))
 }

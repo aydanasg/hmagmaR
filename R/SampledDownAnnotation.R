@@ -22,7 +22,7 @@
 #library(dplyr)
 
 ## PLAC-seq filtered to regulatoryRegions promoter interactions 
-SampledDownAnnotation <- function(fileName, hic, regulatoryRegions, snps, annotated_genes, snpgeneexon, loopNumber, sampleDownNumber, AnnotationFile.path){
+SampledDownAnnotation <- function(hic, regulatoryRegions, snps, annotated_genes, snpgeneexon, loopNumber, sampleDownNumber, AnnotationFile){
 
   #Loading TxDb.Hsapiens.UCSC.hg19.knownGene.org.Hs.eg.db for gene coordinates 
   annotated_genes<-annotated_genes
@@ -134,7 +134,7 @@ for(s in 1:sampleDownNumber) {
   # Convert dataframe to list
   aggregated_list <- apply(aggregated_df_conv, 1, function(row) paste(row, collapse = "\t"))
   
-  writeLines(aggregated_list, paste0(AnnotationFile.path, "SNP_aggregate_transcript.", fileName, ".", s, ".transcript.annot"))
+  writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot.", s))
 }
 }
   
