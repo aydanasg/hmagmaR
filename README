@@ -5,3 +5,4 @@ How to Run:
     install correct version from here: https://cncr.nl/research/magma/
     and replace `magma` binary with the correct one.
     Your should be able to execute the binary file with `./magma` command
+3. Please create PRs to main branch instead of direct commit
