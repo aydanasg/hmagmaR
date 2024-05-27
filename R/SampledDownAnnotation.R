@@ -134,7 +134,7 @@ for(s in 1:sampleDownNumber) {
   # Convert dataframe to list
   aggregated_list <- apply(aggregated_df_conv, 1, function(row) paste(row, collapse = "\t"))
   
-  writeLines(aggregated_list, paste0(AnnotationFile.path, "SNP_aggregate_transcript.", fileName, ".", sampleDownNumber,".transcript.annot"))
+  writeLines(aggregated_list, paste0(AnnotationFile.path, "SNP_aggregate_transcript.", fileName, ".", s, ".transcript.annot"))
 }
 }
   
