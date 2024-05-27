@@ -2,8 +2,8 @@
 #'
 #' Generates an annotation file for magma input
 #' @param fileName Name in the ouput file 
-#' @param hic Chromatin interaction data file with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
-#' @param regulatoryRegions File of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
+#' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
+#' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
 #' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
 #' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg" 
@@ -33,7 +33,7 @@ AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotat
   GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)
   
   #Reading the plac-seq files for each cell type
-  hic <- fread(input = paste0(hic))
+  hic <- hic
   
   #Doubling the hic and flipping the start1-end1 with int1-int2 (this is for GRanges function and IRanges)
   hic.int1 <- hic[,1:6]
@@ -47,7 +47,7 @@ AnnotationFileHmagma <- function(fileName, hic, regulatoryRegions, snps, annotat
                        int1=hic$start2,int2=hic$end2)
   
   #Reading regulatoryRegions data  (Nott et al., 2019 paper) 
-  regulatoryRegions<- fread(input = paste0(regulatoryRegions))
+  regulatoryRegions<- regulatoryRegions
   colnames(regulatoryRegions)<-c("chr", "start", "end")
   regulatoryRegions_ranges<-GRanges(regulatoryRegions$chr, IRanges(as.numeric(regulatoryRegions$start), as.numeric(regulatoryRegions$end)))   
   
