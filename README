@@ -16,7 +16,7 @@ How to Install:
 
 Example: 
 
-1. Generating annotation file using `AnnotationFileHmagma()` function
+1. Generating annotation file using `AnnotationFileHmagma()` function to be used in `GeneLevelAnalysis_hmagma()` function
 
 `hmagmaR::AnnotationFileHmagma(fileName = {fileName}, 
                                hic = {hic}, 
@@ -31,5 +31,5 @@ Example:
 `hmagmaR::GeneLevelAnalysis_hmagma(magma="/.../magma",
                                   g1000="/.../g1000_eur",
                                   gwas="/.../{gwas_summary}.tsv",
-                                  AnnotationFile="/.../{fileName}.transcript.annot",
+                                  AnnotationFile="/.../{fileName}.transcript.annot", #output of `AnnotationFileHmagma()` function
                                   output="/.../hmagma_output/{fileName}")`
