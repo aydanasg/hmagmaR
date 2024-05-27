@@ -26,6 +26,9 @@ Example:
                                snpgeneexon = {snpgeneexon}, 
                                AnnotationFile.path = "/.../annotation_output/")`
 
+annotated_genes and snpgeneexon files can be taked from data/ folder where data is generated using 
+TxDb.Hsapiens.UCSC.hg19.knownGene, org.Hs.eg.db and 1,000 Genomes reference data files (.bin) from European population 
+
 2. Running gene level analysis using `GeneLevelAnalysis_hmagma()` function
 
 `hmagmaR::GeneLevelAnalysis_hmagma(magma="/.../magma",
