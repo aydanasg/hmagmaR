@@ -7,3 +7,13 @@ How to Run:
     Your should be able to execute the binary file with `./magma` command
     Then copy path to magma binary file and put as a variable to `GeneLevelAnalysis_hmagma()` function
 3. Please create PRs to main branch instead of direct commit
+
+Example:
+```
+hmagmaR::GeneLevelAnalysis_hmagma(
+  magma="/.../magma",
+  g1000="/.../g1000_eur",
+  gwas="/.../{fileName}.tsv",
+  AnnotationFile="/.../{fileName}.transcript.annot",
+  output="/.../outputFolder")
+```
