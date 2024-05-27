@@ -1,20 +1,35 @@
 **hmagmaR - Incorporation of chromatin interaction and epigenetic profiles to predict risk genes: Gene Level Analysis using MAGMA (HMAGMA)**
+
 How to Install: 
 
 1. `remotes::install_github("aydanasg/hmagmaR")`
-2. Note that, HMAGMA_system/magma binary file is for mac OS, if you want to run it for your own OS, 
-    install correct version from here: https://cncr.nl/research/magma/
-    and replace `magma` binary with the correct one.
-    Your should be able to execute the binary file with `./magma` command
-    Then copy path to magma binary file and put as a variable to `GeneLevelAnalysis_hmagma()` function
-3. Please create PRs to main branch instead of direct commit
+2. Required packages: 
+          data.table (>= 1.14.8),
+          TxDb.Hsapiens.UCSC.hg19.knownGene (>= 3.2.2),
+          org.Hs.eg.db (>= 3.18.0),
+          GenomicRanges (>= 1.54.1),
+          ChIPseeker (>= 1.38.0),
+          dplyr (>= 1.1.3)
+3. Note that, to run `GeneLevelAnalysis_hmagma()` function you need to install a correct version of magma 
+   from here: https://cncr.nl/research/magma/
 
-Example:
-```
-hmagmaR::GeneLevelAnalysis_hmagma(
-  magma="/.../magma",
-  g1000="/.../g1000_eur",
-  gwas="/.../{fileName}.tsv",
-  AnnotationFile="/.../{fileName}.transcript.annot",
-  output="/.../outputFolder")
-```
+
+Example: 
+
+1. Generating annotation file using `AnnotationFileHmagma()` function
+
+`hmagmaR::AnnotationFileHmagma(fileName = {fileName}, 
+                               hic = {hic}, 
+                               regulatoryRegions = {regulatoryRegions}, 
+                               snps = {snps}, 
+                               annotated_genes = {annotated_genes},
+                               snpgeneexon = {snpgeneexon}, 
+                               AnnotationFile.path = "/.../annotation_output/")`
+
+2. Running gene level analysis using `GeneLevelAnalysis_hmagma()` function
+
+`hmagmaR::GeneLevelAnalysis_hmagma(magma="/.../magma",
+                                  g1000="/.../g1000_eur",
+                                  gwas="/.../{gwas_summary}.tsv",
+                                  AnnotationFile="/.../{fileName}.transcript.annot",
+                                  output="/.../hmagma_output/{fileName}")`
