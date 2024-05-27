@@ -5,4 +5,5 @@ How to Run:
     install correct version from here: https://cncr.nl/research/magma/
     and replace `magma` binary with the correct one.
     Your should be able to execute the binary file with `./magma` command
+    Then copy path to magma binary file and put as a variable to `GeneLevelAnalysis_hmagma()` function
 3. Please create PRs to main branch instead of direct commit
