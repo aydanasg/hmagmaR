@@ -1,4 +1,6 @@
-How to Run:
+# hmagmaR - Incorporation of chromatin interaction and epigenetic profiles to predict risk genes: Gene Level Analysis using MAGMA (HMAGMA)
+
+How to Install: 
 
 1. `remotes::install_github("aydanasg/hmagmaR")`
 2. Note that, HMAGMA_system/magma binary file is for mac OS, if you want to run it for your own OS, 
