@@ -8,6 +8,5 @@
 #' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
 #' @export
 GeneLevelAnalysis_hmagma <- function(g1000, gwas, AnnotationFile, output) {
-system(paste("HMAGMA_system/magma", "--bfile", g1000, "--pval", gwas, "use=SNP,P ncol=N", "--gene-annot", AnnotationFile, "--out", output))
+    system(paste("HMAGMA_system/magma", "--bfile", g1000, "--pval", gwas, "use=SNP,P ncol=N", "--gene-annot", AnnotationFile, "--out", output))
 }
-
