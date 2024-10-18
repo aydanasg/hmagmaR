@@ -138,8 +138,8 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
   writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot"))
 
   } else if (!is.null(promoterRegions) && !is.null(exonicRegions) && !is.null(enhancerRegions)) {
-    message("Using promoterRegions, exonicRegions and enhancerRegions...")
-    # Add logic for when promoterRegions, exonicRegions and enhancerRegions are used together
+    message("Using promoterRegions, exonicRegions, and enhancerRegions")
+    # Add logic to handle all three together
     promoterRegions<- promoterRegions
     exonicRegions <- exonicRegions
 
@@ -232,7 +232,8 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
   aggregated_list <- apply(aggregated_df_conv, 1, function(row) paste(row, collapse = "\t"))
   
   writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot"))
-  } else {
-    stop("You must provide either 'regulatoryRegions' or both 'promoterRegions' and 'enhancerRegions'.")
+   } else {
+    stop("Either regulatoryRegions or all three (promoterRegions, exonicRegions, and enhancerRegions) must be provided.")
   }
+
   }
