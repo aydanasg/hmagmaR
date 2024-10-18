@@ -5,27 +5,32 @@
 \title{Gene level analysis carried out by magma (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219)}
 \usage{
 AnnotationFileHmagma(
-  fileName,
   hic,
-  regulatoryRegions,
+  regulatoryRegions = NULL,
+  promoterRegions = NULL,
+  enhancerRegions = NULL,
   snps,
   annotated_genes,
   snpgeneexon,
-  AnnotationFile.path
+  AnnotationFile
 )
 }
 \arguments{
-\item{fileName}{Name in the ouput file}
-
 \item{hic}{Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number}
 
 \item{regulatoryRegions}{Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
+
+\item{promoterRegions}{Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
+
+\item{enhancerRegions}{Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
 \item{snps}{Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"}
 
 \item{annotated_genes}{Dataframe of reference genes. This should contain columns with names "chr", "start", "end",    "ensg". Chromosome columns should have "chr" before the number}
 
 \item{snpgeneexon}{Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"}
+
+\item{fileName}{Name in the ouput file}
 
 \item{AnnotationFile.path}{Path where to save the sampled down annotation files}
 }

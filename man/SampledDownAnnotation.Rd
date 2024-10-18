@@ -5,7 +5,6 @@
 \title{Gene level analysis carried out by magma (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219)}
 \usage{
 SampledDownAnnotation(
-  fileName,
   hic,
   regulatoryRegions,
   snps,
@@ -13,12 +12,10 @@ SampledDownAnnotation(
   snpgeneexon,
   loopNumber,
   sampleDownNumber,
-  AnnotationFile.path
+  AnnotationFile
 )
 }
 \arguments{
-\item{fileName}{Name in the ouput file}
-
 \item{hic}{Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number}
 
 \item{regulatoryRegions}{Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
@@ -32,6 +29,8 @@ SampledDownAnnotation(
 \item{loopNumber}{Number to sample down the loop number to. This is useful when comparing more than one sample to ensure that the difference is not down to the difference in loop number}
 
 \item{sampleDownNumber}{Number of times sample down the loop number randomly}
+
+\item{fileName}{Name in the ouput file}
 
 \item{AnnotationFile.path}{Path where to save the sampled down annotation files}
 }
