@@ -32,6 +32,8 @@ AnnotationFileHmagma(
 
 \item{fileName}{Name in the ouput file}
 
+\item{exonicRegions}{Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
+
 \item{AnnotationFile.path}{Path where to save the sampled down annotation files}
 }
 \value{
