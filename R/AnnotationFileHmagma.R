@@ -14,7 +14,6 @@
 #' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
 #' @export
 
-
 #library(data.table)
 #library(GenomicRanges)
 #library(ChIPseeker)
