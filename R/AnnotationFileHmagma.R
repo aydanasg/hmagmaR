@@ -5,6 +5,7 @@
 #' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
 #' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param promoterRegions Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
+#' @param exonicRegions Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param enhancerRegions Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
 #' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
@@ -137,17 +138,22 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
   
   writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot"))
 
-  } else if (!is.null(promoterRegions) && !is.null(enhancerRegions)) {
-    message("Using promoterRegions and enhancerRegions...")
-    # Add logic for when promoterRegions and enhancerRegions are used together
+  } else if (!is.null(promoterRegions) && !is.null(exonicRegions) && !is.null(enhancerRegions)) {
+    message("Using promoterRegions, exonicRegions and enhancerRegions...")
+    # Add logic for when promoterRegions, exonicRegions and enhancerRegions are used together
     promoterRegions<- promoterRegions
-  colnames(promoterRegions)<-c("chr", "start", "end")
-  promoterRegions_ranges<-GRanges(promoterRegions$chr, IRanges(as.numeric(promoterRegions$start), as.numeric(promoterRegions$end)))   
+    exonicRegions <- exonicRegions
+
+    regulatoryRegions<-rbind(promoterRegions,exonicRegions)
+    regulatoryRegions<-unique(regulatoryRegions)
+
+  colnames(regulatoryRegions)<-c("chr", "start", "end")
+  regulatoryRegions_ranges<-GRanges(regulatoryRegions$chr, IRanges(as.numeric(regulatoryRegions$start), as.numeric(regulatoryRegions$end)))   
   
   #Selecting plac-seq interactions that overlap with promoters 
-  olap<-findOverlaps(query = hicranges, subject = promoterRegions_ranges) #default maxgap=-1L, when one range's start/end strictly inside the other, #the gap is considered to be -1.
+  olap<-findOverlaps(query = hicranges, subject = promoterRegionsregulatoryRegions_ranges_ranges) #default maxgap=-1L, when one range's start/end strictly inside the other, #the gap is considered to be -1.
   placranges<-hicranges[queryHits(olap)]
-  mcols(placranges)<-cbind(mcols(hicranges[queryHits(olap)]), mcols(promoterRegions_ranges[subjectHits(olap)])) 
+  mcols(placranges)<-cbind(mcols(hicranges[queryHits(olap)]), mcols(regulatoryRegions_ranges[subjectHits(olap)])) 
   
   #annotating consensus peaks to promoters/exons
   annotation<-annotatePeak(peak = placranges, tssRegion = c(-2000, 500), TxDb = TxDb.Hsapiens.UCSC.hg19.knownGene, annoDb = "org.Hs.eg.db")
