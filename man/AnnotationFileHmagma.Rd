@@ -8,6 +8,7 @@ AnnotationFileHmagma(
   hic,
   regulatoryRegions = NULL,
   promoterRegions = NULL,
+  exonicRegions = NULL,
   enhancerRegions = NULL,
   snps,
   annotated_genes,
@@ -22,6 +23,8 @@ AnnotationFileHmagma(
 
 \item{promoterRegions}{Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
+\item{exonicRegions}{Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
+
 \item{enhancerRegions}{Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
 \item{snps}{Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"}
@@ -31,8 +34,6 @@ AnnotationFileHmagma(
 \item{snpgeneexon}{Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"}
 
 \item{fileName}{Name in the ouput file}
-
-\item{exonicRegions}{Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
 \item{AnnotationFile.path}{Path where to save the sampled down annotation files}
 }
