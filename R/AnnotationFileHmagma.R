@@ -143,14 +143,14 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
     promoterRegions<- promoterRegions
     exonicRegions <- exonicRegions
 
-    regulatoryRegions<-rbind(promoterRegions,exonicRegions)
-    regulatoryRegions<-unique(regulatoryRegions)
+    regulatoryRegions<- rbind(promoterRegions, exonicRegions)
+    regulatoryRegions<- unique(regulatoryRegions)
 
   colnames(regulatoryRegions)<-c("chr", "start", "end")
   regulatoryRegions_ranges<-GRanges(regulatoryRegions$chr, IRanges(as.numeric(regulatoryRegions$start), as.numeric(regulatoryRegions$end)))   
   
   #Selecting plac-seq interactions that overlap with promoters 
-  olap<-findOverlaps(query = hicranges, subject = promoterRegionsregulatoryRegions_ranges_ranges) #default maxgap=-1L, when one range's start/end strictly inside the other, #the gap is considered to be -1.
+  olap<-findOverlaps(query = hicranges, subject = regulatoryRegions_ranges) #default maxgap=-1L, when one range's start/end strictly inside the other, #the gap is considered to be -1.
   placranges<-hicranges[queryHits(olap)]
   mcols(placranges)<-cbind(mcols(hicranges[queryHits(olap)]), mcols(regulatoryRegions_ranges[subjectHits(olap)])) 
   
