@@ -4,27 +4,8 @@
 #' @param fileName Name in the ouput file 
 #' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
 #' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
-#' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
-#' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
-#' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg" 
-#' @param AnnotationFile.path Path where to save the sampled down annotation files 
-#' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
-#' @export
-
-
-#library(data.table)
-#library(GenomicRanges)
-#library(ChIPseeker)
-#library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#library(org.Hs.eg.db)
-#library(dplyr)
-
-#' Gene level analysis carried out by magma (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219)
-#'
-#' Generates an annotation file for magma input
-#' @param fileName Name in the ouput file 
-#' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
-#' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
+#' @param promoterRegions Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
+#' @param enhancerRegions Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
 #' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
 #' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg" 
