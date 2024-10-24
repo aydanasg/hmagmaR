@@ -5,7 +5,6 @@
 #' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
 #' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param promoterRegions Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
-#' @param exonicRegions Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param enhancerRegions Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
 #' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
 #' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
@@ -22,7 +21,7 @@
 #library(dplyr)
 
 ## PLAC-seq filtered to regulatoryRegions promoter interactions 
-AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions = NULL, exonicRegions = NULL, enhancerRegions = NULL, snps, annotated_genes,  snpgeneexon, AnnotationFile) {
+AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions = NULL, enhancerRegions = NULL, snps, annotated_genes,  snpgeneexon, AnnotationFile) {
   
   #Loading TxDb.Hsapiens.UCSC.hg19.knownGene.org.Hs.eg.db for gene coordinates 
   annotated_genes<-annotated_genes
@@ -137,14 +136,12 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
   
   writeLines(aggregated_list, paste0(AnnotationFile, ".transcript.annot"))
 
-  } else if (!is.null(promoterRegions) && !is.null(exonicRegions) && !is.null(enhancerRegions)) {
+  } else if (!is.null(promoterRegions) && !is.null(enhancerRegions)) {
     message("Using promoterRegions, exonicRegions, and enhancerRegions")
     # Add logic to handle all three together
     promoterRegions<- promoterRegions
-    exonicRegions <- exonicRegions
-
-    regulatoryRegions<- rbind(promoterRegions, exonicRegions)
-    regulatoryRegions<- unique(regulatoryRegions)
+    
+    regulatoryRegions<- unique(promoterRegions)
 
   colnames(regulatoryRegions)<-c("chr", "start", "end")
   regulatoryRegions_ranges<-GRanges(regulatoryRegions$chr, IRanges(as.numeric(regulatoryRegions$start), as.numeric(regulatoryRegions$end)))   

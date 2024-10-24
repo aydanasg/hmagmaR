@@ -8,7 +8,6 @@ AnnotationFileHmagma(
   hic,
   regulatoryRegions = NULL,
   promoterRegions = NULL,
-  exonicRegions = NULL,
   enhancerRegions = NULL,
   snps,
   annotated_genes,
@@ -22,8 +21,6 @@ AnnotationFileHmagma(
 \item{regulatoryRegions}{Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
 \item{promoterRegions}{Dataframe of promoters in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
-
-\item{exonicRegions}{Dataframe of exons in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
 \item{enhancerRegions}{Dataframe of enhancers in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number}
 
