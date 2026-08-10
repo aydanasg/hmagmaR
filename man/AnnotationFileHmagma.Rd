@@ -30,9 +30,7 @@ AnnotationFileHmagma(
 
 \item{snpgeneexon}{Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"}
 
-\item{fileName}{Name in the ouput file}
-
-\item{AnnotationFile.path}{Path where to save the sampled down annotation files}
+\item{AnnotationFile}{Path prefix for the output file; ".transcript.annot" is appended}
 }
 \value{
 Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)

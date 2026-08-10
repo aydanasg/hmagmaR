@@ -30,9 +30,9 @@ SampledDownAnnotation(
 
 \item{sampleDownNumber}{Number of times sample down the loop number randomly}
 
-\item{fileName}{Name in the ouput file}
+\item{AnnotationFile}{Path where to save the sampled down annotation files}
 
-\item{AnnotationFile.path}{Path where to save the sampled down annotation files}
+\item{fileName}{Name in the ouput file}
 }
 \value{
 Function generates sampled down gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
