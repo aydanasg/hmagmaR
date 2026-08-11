@@ -98,8 +98,8 @@ AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions 
 
   #Making MAGMA compatible annotation file
   # Aggregate rsids by ensg
-  aggregated_df <- data.table::as.data.table(snpcomb)[
-    , list(rsid = paste(rsid, collapse = "\t")), keyby = "ensg"]
+  aggregated_df <- aggregate(rsid ~ ensg, data = snpcomb,
+                              FUN = function(x) paste(x, collapse = "\t"))
 
   #Creating gene coordinate information (chr:start:end) and attaching it to each gene
   index <- paste(annotated_genes$chr, annotated_genes$start, annotated_genes$end, sep = ":")
