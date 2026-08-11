@@ -110,8 +110,8 @@ for(s in 1:sampleDownNumber) {
   
   #Making MAGMA compatible annotation file
   #Aggregate rsids by ensg
-  aggregated_df <- data.table::as.data.table(snpcomb_loop_melt)[
-    , list(rsid = paste(rsid, collapse = "\t")), keyby = "ensg"]
+  aggregated_df <- aggregate(rsid ~ ensg, data = snpcomb_loop_melt,
+                              FUN = function(x) paste(x, collapse = "\t"))
 
   #Adding the index information to the gene-snp file
   aggregated_df$index<-annotated_genes[match(aggregated_df$ensg, annotated_genes$ensg),"index"]
