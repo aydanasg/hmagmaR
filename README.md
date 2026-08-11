@@ -43,6 +43,7 @@ hmagmaR::GeneLevelAnalysis_hmagma(magma="/.../magma",
                                   output="/.../hmagma_output/{fileName}")
 ```
 
+![Analysis schematic](cell_hmagma_schematic.pdf)
 ## Publications
 
 hmagmaR was used in the following publications:
