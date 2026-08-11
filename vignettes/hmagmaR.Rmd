@@ -1,0 +1,142 @@
+---
+title: "Introduction to hmagmaR"
+output: BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to hmagmaR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+`hmagmaR` links non-coding GWAS SNPs to their putative target genes by combining
+chromatin interaction data (e.g. PLAC-seq or Hi-C) with regulatory region annotations
+(e.g. promoters, enhancers, H3K27ac peaks). The output is a MAGMA-compatible gene
+annotation file, which can then be used for gene-level association testing.
+
+The typical workflow has two stages:
+
+1. **`AnnotationFileHmagma()`** (or its down-sampled variant, `SampledDownAnnotation()`)
+   builds the gene annotation file by overlapping chromatin interactions with regulatory
+   regions and SNPs.
+2. **`GeneLevelAnalysis_hmagma()`** runs MAGMA itself on that annotation file against a
+   GWAS summary statistics file, using an external MAGMA binary and 1000 Genomes
+   reference panel.
+
+This vignette demonstrates stage 1 using a small example dataset bundled with the
+package. Stage 2 requires external software and reference files not included with
+`hmagmaR`, so it is shown for reference only and not executed here.
+
+```{r setup}
+library(hmagmaR)
+```
+
+## Example data
+
+`hmagmaR` ships with a small example dataset, `test_dataset.microglia.hg19`, subsampled
+from microglia PLAC-seq interactions (Nott et al., 2019), microglia promoter/enhancer
+regions, 1000 Genomes SNPs, and a GWAS summary statistics table, so the workflow below
+runs in seconds rather than requiring genome-wide reference data.
+
+```{r load-data}
+data("test_dataset.microglia.hg19")
+
+hic[1:3, ]
+promoterRegions[1:3, ]
+enhancerRegions[1:3, ]
+snps[1:3, ]
+annotated_genes[1:3, ]
+snpgeneexon[1:3, ]
+```
+
+- `hic`: chromatin interaction data with columns `chrom1`, `start1`, `end1`, `chrom2`,
+  `start2`, `end2` (plus additional interaction-calling metadata).
+- `promoterRegions` / `enhancerRegions`: regulatory regions in BED-like format
+  (`chr`, `start`, `end`).
+- `snps`: reference SNPs (e.g. from a `.bim` file), with columns `chr`, `Position`, `SNP`.
+- `annotated_genes`: reference gene coordinates, with columns `chr`, `start`, `end`, `ensg`.
+- `snpgeneexon`: SNPs falling within exons/promoters of each gene, with columns `rsid`,
+  `ensg`.
+
+## Building a gene annotation file
+
+`AnnotationFileHmagma()` accepts either a single `regulatoryRegions` table, or separate
+`promoterRegions` and `enhancerRegions` tables (in which case promoters anchor the
+chromatin interactions, and enhancers filter which SNPs are retained). Here we use the
+latter:
+
+```{r run-annotation}
+annotation_file <- tempfile("hmagmaR_example")
+
+AnnotationFileHmagma(
+  hic = hic,
+  promoterRegions = promoterRegions,
+  enhancerRegions = enhancerRegions,
+  snps = snps,
+  annotated_genes = annotated_genes,
+  snpgeneexon = snpgeneexon,
+  AnnotationFile = annotation_file
+)
+```
+
+This writes a MAGMA-style annotation file (`<AnnotationFile>.transcript.annot`), with one
+row per gene: the Ensembl gene ID, its genomic coordinates, and the tab-separated rsIDs
+of all SNPs linked to it.
+
+```{r show-output}
+result <- readLines(paste0(annotation_file, ".transcript.annot"))
+length(result)
+head(result, 5)
+```
+
+With this small example dataset, `r length(result)` genes were annotated with at least
+one interacting SNP. Because the bundled data is a random subsample of the full
+reference tables rather than a curated locus, this number is illustrative only - a real
+analysis using full genome-wide interaction, regulatory region, and SNP reference data
+will typically annotate many more genes.
+
+## Downstream: gene-level analysis with MAGMA
+
+Once an annotation file has been generated, `GeneLevelAnalysis_hmagma()` calls MAGMA to
+perform gene-level association testing against a GWAS summary statistics file. This step
+requires:
+
+- A local installation of [MAGMA](https://cncr.nl/research/magma/),
+- 1000 Genomes reference files (`.bed`/`.bim`/`.fam`) for the appropriate ancestry,
+- GWAS summary statistics with `SNP`, `P`, and `N` columns.
+
+```{r gene-level-analysis, eval = FALSE}
+GeneLevelAnalysis_hmagma(
+  magma = "/path/to/magma",
+  g1000 = "/path/to/g1000_eur",
+  gwas = "/path/to/gwas_summary_stats.txt",
+  AnnotationFile = paste0(annotation_file, ".transcript.annot"),
+  output = "hmagmaR_example"
+)
+```
+
+This produces MAGMA's standard gene-level output files (`.genes.out`, `.genes.raw`,
+`.log`), which can be used for downstream gene set or pathway analyses.
+
+## Sampling down (`SampledDownAnnotation()`)
+
+When comparing annotation results across samples with different numbers of chromatin
+interactions, `SampledDownAnnotation()` repeatedly subsamples the `hic` table down to a
+fixed number of interactions (`loopNumber`), so that differences in results reflect
+biology rather than differing input sizes. It otherwise follows the same pipeline as
+`AnnotationFileHmagma()` with a single combined `regulatoryRegions` table, writing one
+annotation file per resample (suffixed `.transcript.annot.1`, `.transcript.annot.2`,
+etc.).
+
+## Session information
+
+```{r session-info}
+sessionInfo()
+```

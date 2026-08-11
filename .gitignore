@@ -5,3 +5,4 @@
 .DS_Store
 .Rbuildignore
 hmagmaR.Rproj
+inst/doc

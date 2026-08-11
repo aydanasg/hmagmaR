@@ -1,0 +1,52 @@
+# hmagmaR
+
+Incorporation of chromatin interaction and epigenetic profiles to predict risk genes: Gene Level Analysis using MAGMA (HMAGMA)
+
+## How to Install
+
+1. `remotes::install_github("aydanasg/hmagmaR")`
+2. Required packages:
+   ```
+   data.table (>= 1.14.8),
+   TxDb.Hsapiens.UCSC.hg19.knownGene (>= 3.2.2),
+   org.Hs.eg.db (>= 3.18.0),
+   GenomicRanges (>= 1.54.1),
+   ChIPseeker (>= 1.38.0),
+   dplyr (>= 1.1.3)
+   ```
+3. Note that, to run `GeneLevelAnalysis_hmagma()` function you need to install a correct version of magma
+   from here: https://cncr.nl/research/magma/
+
+## Example
+
+### 1. Generating annotation file using `AnnotationFileHmagma()` function to be used in `GeneLevelAnalysis_hmagma()` function
+
+```r
+hmagmaR::AnnotationFileHmagma(hic = {hic},
+                               regulatoryRegions = {regulatoryRegions},
+                               snps = {snps},
+                               annotated_genes = {annotated_genes},
+                               snpgeneexon = {snpgeneexon},
+                               AnnotationFile = "/.../annotation_output/{fileName}")
+```
+
+`annotated_genes` and `snpgeneexon` files can be taken from the `data/` folder, where data is generated using
+`TxDb.Hsapiens.UCSC.hg19.knownGene`, `org.Hs.eg.db` and 1,000 Genomes reference data files (.bin) from the European population.
+
+### 2. Running gene level analysis using `GeneLevelAnalysis_hmagma()` function
+
+```r
+hmagmaR::GeneLevelAnalysis_hmagma(magma="/.../magma",
+                                  g1000="/.../g1000_eur",
+                                  gwas="/.../{gwas_summary}.tsv",
+                                  AnnotationFile="/.../{fileName}.transcript.annot", #output of `AnnotationFileHmagma()` function
+                                  output="/.../hmagma_output/{fileName}")
+```
+
+## Publications
+
+hmagmaR was used in the following publications:
+
+1. Askarova et al. (2025) - https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011407
+2. Ziegler & Askarova et al. (2025) - https://www.cell.com/neuron/fulltext/S0896-6273(25)00754-8
+3. Cohen et al. (2026) - https://link.springer.com/article/10.1186/s13195-026-02036-1
