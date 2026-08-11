@@ -8,4 +8,16 @@
 \description{
 Combines chromatin interaction (e.g. PLAC-seq/Hi-C) data with regulatory region annotations (e.g. promoters, enhancers, H3K27ac) to link non-coding GWAS SNPs to their putative target genes, producing MAGMA-compatible gene annotation files for downstream gene-level association testing.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/aydanasg/hmagmaR}
+  \item Report bugs at \url{https://github.com/aydanasg/hmagmaR/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Aydan Asgarova \email{aydan.asgarova00@gmail.com}
+
+}
 \keyword{internal}
