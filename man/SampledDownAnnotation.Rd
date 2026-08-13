@@ -31,12 +31,19 @@ SampledDownAnnotation(
 \item{sampleDownNumber}{Number of times sample down the loop number randomly}
 
 \item{AnnotationFile}{Path where to save the sampled down annotation files}
-
-\item{fileName}{Name in the ouput file}
 }
 \value{
 Function generates sampled down gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
 }
 \description{
 Generates an annotation file for magma input
+}
+\examples{
+data("test_dataset.microglia.hg19")
+out <- tempfile()
+SampledDownAnnotation(
+  hic = hic, regulatoryRegions = regulatoryRegions, snps = snps,
+  annotated_genes = annotated_genes, snpgeneexon = snpgeneexon,
+  loopNumber = 5000, sampleDownNumber = 1, AnnotationFile = out
+)
 }

@@ -38,3 +38,12 @@ Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl
 \description{
 Generates an annotation file for magma input
 }
+\examples{
+data("test_dataset.microglia.hg19")
+out <- tempfile()
+AnnotationFileHmagma(
+  hic = hic, promoterRegions = promoterRegions, enhancerRegions = enhancerRegions,
+  snps = snps, annotated_genes = annotated_genes, snpgeneexon = snpgeneexon,
+  AnnotationFile = out
+)
+}

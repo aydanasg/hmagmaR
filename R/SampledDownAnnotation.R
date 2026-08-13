@@ -1,30 +1,37 @@
 #' Gene level analysis carried out by magma (https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004219)
 #'
 #' Generates an annotation file for magma input
-#' @param fileName Name in the ouput file 
-#' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number 
-#' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number 
+#' @param hic Dataframe of chromatin interaction data with 6 columns in the format: "chrom1", "start1", "end1", "chrom2", "start2", "end2". Chromosome columns should have "chr" before the number
+#' @param regulatoryRegions Dataframe of regulatory regions (H3K27ac) in the .bed format (chr, start, end). Chromosome columns should have "chr" before the number
 #' @param snps Dataframe of reference snps. This could be the ".bim" file from g1000 reference genome in the format: "chr", "position", "rsid"
-#' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number 
-#' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg" 
+#' @param annotated_genes Dataframe of reference genes. This should contain columns with names "chr", "start", "end",	"ensg". Chromosome columns should have "chr" before the number
+#' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"
 #' @param loopNumber Number to sample down the loop number to. This is useful when comparing more than one sample to ensure that the difference is not down to the difference in loop number
-#' @param sampleDownNumber Number of times sample down the loop number randomly 
+#' @param sampleDownNumber Number of times sample down the loop number randomly
 #' @param AnnotationFile Path where to save the sampled down annotation files
 #' @return Function generates sampled down gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
+#' @examples
+#' data("test_dataset.microglia.hg19")
+#' out <- tempfile()
+#' SampledDownAnnotation(
+#'   hic = hic, regulatoryRegions = regulatoryRegions, snps = snps,
+#'   annotated_genes = annotated_genes, snpgeneexon = snpgeneexon,
+#'   loopNumber = 5000, sampleDownNumber = 1, AnnotationFile = out
+#' )
 #' @export
 
-
-#library(GenomicRanges)
-#library(IRanges)
-#library(ChIPseeker)
-#library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#library(org.Hs.eg.db)
-#library(S4Vectors)
-#library(data.table)
-#library(dplyr)
-
-## PLAC-seq filtered to regulatoryRegions promoter interactions 
+## PLAC-seq filtered to regulatoryRegions promoter interactions
 SampledDownAnnotation <- function(hic, regulatoryRegions, snps, annotated_genes, snpgeneexon, loopNumber, sampleDownNumber, AnnotationFile){
+
+  #Save and restore the caller's RNG state so the set.seed() calls below
+  #(needed for reproducible sample-down iterations) don't leak into the
+  #caller's session
+  if (exists(".Random.seed", envir = .GlobalEnv)) {
+    oldseed <- get(".Random.seed", envir = .GlobalEnv)
+    on.exit(assign(".Random.seed", oldseed, envir = .GlobalEnv), add = TRUE)
+  } else {
+    on.exit(rm(".Random.seed", envir = .GlobalEnv), add = TRUE)
+  }
 
   #reading snps file -  g1000 reference genome from European ancestry (.bim) and selecting only relevant columns (chr, rsid, position)
   snps<-GRanges(snps$chr, IRanges(snps$Position, snps$Position), rsid=snps$SNP)

@@ -23,3 +23,19 @@ Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl
 \description{
 Generates an annotation file for magma input
 }
+\examples{
+# Requires a local MAGMA installation and 1000 Genomes reference files;
+# skipped automatically when magma is not found on the PATH.
+magma_path <- Sys.which("magma")
+if (nzchar(magma_path)) {
+  GeneLevelAnalysis_hmagma(
+    magma = magma_path,
+    g1000 = "/path/to/g1000_eur",
+    gwas = "/path/to/gwas_summary_stats.txt",
+    AnnotationFile = "/path/to/annotation.transcript.annot",
+    output = tempfile()
+  )
+} else {
+  message("magma not found on PATH; skipping example.")
+}
+}

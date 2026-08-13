@@ -10,16 +10,15 @@
 #' @param snpgeneexon Dataframe of genes and snps within it. This should contain columns with names "rsid", "ensg"
 #' @param AnnotationFile Path prefix for the output file; ".transcript.annot" is appended
 #' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
+#' @examples
+#' data("test_dataset.microglia.hg19")
+#' out <- tempfile()
+#' AnnotationFileHmagma(
+#'   hic = hic, promoterRegions = promoterRegions, enhancerRegions = enhancerRegions,
+#'   snps = snps, annotated_genes = annotated_genes, snpgeneexon = snpgeneexon,
+#'   AnnotationFile = out
+#' )
 #' @export
-
-#library(GenomicRanges)
-#library(IRanges)
-#library(ChIPseeker)
-#library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#library(org.Hs.eg.db)
-#library(S4Vectors)
-#library(data.table)
-#library(dplyr)
 
 ## PLAC-seq filtered to regulatoryRegions promoter interactions
 AnnotationFileHmagma <- function(hic, regulatoryRegions = NULL, promoterRegions = NULL, enhancerRegions = NULL, snps, annotated_genes, snpgeneexon, AnnotationFile) {

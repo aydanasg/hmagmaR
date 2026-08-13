@@ -1,14 +1,13 @@
 #' Example microglia PLAC-seq dataset
 #'
 #' A small, randomly subsampled set of objects used to demonstrate the
-#' \code{hmagmaR} workflow in the package vignette. Because \code{LazyData}
-#' is enabled, all of the objects below become available directly by name
-#' as soon as \code{library(hmagmaR)} is called. Because the rows are drawn
+#' \code{hmagmaR} workflow in the package vignette and examples. Load with
+#' \code{data("test_dataset.microglia.hg19")}. Because the rows are drawn
 #' independently at random from each source table (rather than hand-picked
 #' around loci known to overlap), results produced from this dataset are
 #' illustrative only and not biologically meaningful.
 #'
-#' @format Seven objects are provided:
+#' @format Eight objects are provided:
 #' \describe{
 #'   \item{hic}{A data frame/tibble of 20,000 microglia PLAC-seq chromatin
 #'     interactions (Nott et al., 2019), with columns \code{chr1}, \code{start1},
@@ -20,6 +19,10 @@
 #'     (Nott et al., 2019) in BED-like format: \code{chr}, \code{start}, \code{end}.}
 #'   \item{enhancerRegions}{A data frame of 44,090 microglia enhancer regions
 #'     (Nott et al., 2019) in BED-like format: \code{chr}, \code{start}, \code{end}.}
+#'   \item{regulatoryRegions}{A data frame identical to \code{promoterRegions},
+#'     provided for functions such as \code{SampledDownAnnotation()} that take
+#'     a single combined regulatory-region table instead of separate promoter
+#'     and enhancer tables.}
 #'   \item{snps}{A data table of 20,000 reference SNPs subsampled from 1000
 #'     Genomes (European ancestry), with columns \code{chr}, \code{Position},
 #'     \code{SNP}.}
@@ -37,7 +40,7 @@
 #' @docType data
 #' @keywords datasets
 #' @name test_dataset.microglia.hg19
-#' @aliases hic promoterRegions enhancerRegions snps annotated_genes snpgeneexon gwas
+#' @aliases hic promoterRegions enhancerRegions regulatoryRegions snps annotated_genes snpgeneexon gwas
 NULL
 
 #' @rdname test_dataset.microglia.hg19
@@ -48,6 +51,9 @@ NULL
 
 #' @rdname test_dataset.microglia.hg19
 "enhancerRegions"
+
+#' @rdname test_dataset.microglia.hg19
+"regulatoryRegions"
 
 #' @rdname test_dataset.microglia.hg19
 "snps"

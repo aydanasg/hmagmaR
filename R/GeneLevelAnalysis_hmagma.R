@@ -5,8 +5,23 @@
 #' @param g1000 Path to 1,000 Genomes reference data files (.bin, .bed, .fam, .synonyms). Include the name of the of the files in the path (e.g. /path_to_g1000/g1000_eur). Obtain from https://cncr.nl/research/magma/ under Auxiliary files.
 #' @param gwas Path to the GWAS summary statistics to be used where rsid column name is "SNP", p-value column name is "P", and sample size column name is "N"
 #' @param AnnotationFile Annotation file generated using AnnotationFileHmagma() or SampledDownAnnotation()  
-#' @param output Name of the output file 
+#' @param output Name of the output file
 #' @return Function generates gene level analysis files (.genes.raw, .genes.out, .log.suppl, .log)
+#' @examples
+#' # Requires a local MAGMA installation and 1000 Genomes reference files;
+#' # skipped automatically when magma is not found on the PATH.
+#' magma_path <- Sys.which("magma")
+#' if (nzchar(magma_path)) {
+#'   GeneLevelAnalysis_hmagma(
+#'     magma = magma_path,
+#'     g1000 = "/path/to/g1000_eur",
+#'     gwas = "/path/to/gwas_summary_stats.txt",
+#'     AnnotationFile = "/path/to/annotation.transcript.annot",
+#'     output = tempfile()
+#'   )
+#' } else {
+#'   message("magma not found on PATH; skipping example.")
+#' }
 #' @export
 GeneLevelAnalysis_hmagma <- function(magma, g1000, gwas, AnnotationFile, output) {
     system(paste(magma, "--bfile", g1000, "--pval", gwas, "use=SNP,P ncol=N", "--gene-annot", AnnotationFile, "--out", output))
