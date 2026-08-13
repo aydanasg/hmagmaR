@@ -1,7 +1,7 @@
 Package: hmagmaR
 Type: Package
 Title: Incorporation of chromatin interaction and epigenetic profiles to predict risk genes
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: person("Aydan", "Asgarova", email = "aydan.asgarova00@gmail.com",
     role = c("aut", "cre"))
 Description: Combines chromatin interaction (e.g. PLAC-seq/Hi-C) data with regulatory
